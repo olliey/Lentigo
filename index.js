@@ -176,7 +176,7 @@ io.set('authorization',function(data,accept){
 
 io.sockets.on('connection',function(socket){
 
-console.log("client connected");
+
 
 });
 
