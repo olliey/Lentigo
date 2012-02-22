@@ -1,0 +1,57 @@
+#server #{server}		
+#text
+  if everyauth.loggedIn
+    #who
+      #{everyauth.user}
+    #logout
+      p logout
+  else
+    #who.notcalled  
+    #logout.notcalled
+      p logout
+#left
+  #user.box!=partial('_users',myusers)
+  .box
+    #register	
+      a(href="register") Register
+      a(href="login") Login
+      a(href="auth/twitter") Twitter
+      a(href="auth/google") Google
+#disp  
+  #chatbutton.box
+    p Chat
+  #registerme.notcalled
+    p Register Here
+    form#registerform 
+      p Name: 
+        input#thename
+      p Password
+        input#pword(type='password') 
+      input(type='submit') 
+  #login.notcalled
+    p Login Here
+    form#loginform 
+      p Name: 
+        input#lthename
+      p Password
+        input#lpword(type='password')
+      input(type='submit')  
+  #chat.notcalled
+    form#chatform      
+      #conv
+      input#message(type='textarea')  
+      input#vale(type='hidden')
+  #edit.notcalled  
+    p editing the user:
+    #box
+      form(action='/edit/',method='POST')
+      input(type='hidden',name='_method',value='PUT')
+    p 
+      input(type='textarea',name='username',value) 
+      input(type='submit')
+    a(href='/') back
+  #showuser.notcalled
+    p User: 
+    p 
+      a(href="/edit/") edit
+    

@@ -1,0 +1,5 @@
+h2 register
+- if ('undefined' !== typeof errors && errors.length)
+  ul #errors
+     - each error in errors
+       li.error = error

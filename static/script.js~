@@ -1,0 +1,103 @@
+$(document).ready(function() {
+
+$.get('/connected',function(conn){
+console.log(conn);
+  $('#left li p').each(function(i){
+    for(i in conn)
+      {
+        if(conn!=[])
+        {
+        if (conn[i].name==$(this).text())
+          {
+            if($(this).hasClass('present'))
+            {}
+            else
+            {$(this).addClass('present');}  
+            console.log(i);
+
+           }   
+         }
+         }
+          
+  });
+});
+
+
+//socket
+var socket=io.connect('http://localhost:4000');
+socket.on('server-connected',function(data){
+  console.log(data);
+});
+socket.on('logged-in',function(data){
+  console.log("it worked ok");
+});
+
+/*$("#user a").click(function(){
+  $('#showuser').removeClass('notcalled');
+});*/
+
+$("#register a").click(function(){
+  $('#registerme').removeClass('notcalled');
+  $('#login').removeClass('notcalled');
+});
+
+$('#registerform').submit(function(ev){
+  var what=$('#thename').val();
+  var pass=$('#pword').val();
+  $.post('/register',{name:what,password:pass},function(data){
+  cssmod(what);
+  });
+});         
+
+var cssmod=function(what){
+    $('#logout').removeClass('notcalled');
+    $('#who').removeClass('notcalled').html(what);
+    $('#registerme').addClass('notcalled');
+    $('#login').addClass('notcalled');
+}
+
+$('#loginform').submit(function(ev){
+  var what=$('#lthename').val();
+  var pass=$('#lpword').val();
+  $.post('/login',{name:what,password:pass},function(data){
+    
+    $('#who').removeClass('notcalled').html(what); 
+    console.log("success")
+  }); 
+  return false;
+});
+
+$('#logout').click(function(){
+  $.get('/logout',function(data){
+    $('#who').addClass('notcalled');
+    $('#logout').addClass('notcalled');
+    console.log(data);
+  });
+});
+
+$('#chatform').submit(function(ev){
+  var mes=$('#message').val();
+  $('#message').val('').focus();
+  $('#conv').append(mes+'</br>');
+  $('#conv').scrollTop(100000);
+});
+
+$('#chatbutton').click(function(){
+  $('#chat').removeClass('notcalled')
+});
+
+$('#user a').click(function(ev){
+  $('#chat').removeClass('notcalled');
+  ev.preventDefault();
+  var chatreq=this.hash.substr(1);
+  socket.emit('chatstart',{name:chatreq});
+});
+
+});
+
+
+//two quirks
+//register.jade: if you put double quotes instead of single //quotes you cannot put 
+//the a will jump to an anchor if you have a slash in the ad//dress but not if you dont
+//
+

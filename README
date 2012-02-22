@@ -1,0 +1,3 @@
+The goal of this website is to enable Chinese students to practice their english skills by chatting to people from other countries. The website uses Node js and socket io for realtime chat and mongodb and everyauth for the user system. It is possible to log in via google or twitter.
+
+The website is still a work in progress. There is a config file which keeps setup variables.  

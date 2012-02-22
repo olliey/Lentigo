@@ -1,0 +1,8 @@
+p editing the user: #{users.name}
+#box
+  form(action='/edit/'+users._id,method='POST')
+    input(type='hidden',name='_method',value='PUT')
+    p 
+      input(type='textarea',name='username',value=users.name) 
+      input(type='submit')
+a(href='/') back
