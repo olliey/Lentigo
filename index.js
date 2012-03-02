@@ -1,4 +1,5 @@
 var config=require('./config').Config();
+//umm
 var express=require("express");
 var sio=require('socket.io');
 
@@ -35,7 +36,7 @@ userSchema.plugin(mongooseAuth,{
     },
     twitter:{
 	everyauth: {
-            myHostname: 'http://localhost:82'
+            myHostname: 'http://localhost:81'
 	    , consumerKey: config.twitterKey
             , consumerSecret: config.twitterSecret
             , redirectPath: '/'
@@ -43,13 +44,25 @@ userSchema.plugin(mongooseAuth,{
     },
     google:{
 	everyauth:{
-	    myHostname: 'https://localhost'
+	    myHostname: 'http://localhost:81'
             , appId: config.googleId
             , appSecret: config.googleSecret
             , redirectPath: '/'
             , scope: 'https://www.googleapis.com/auth/userinfo.email'
 	    }
-   }
+   },
+   password: {
+       everyauth: {
+           getLoginPath: '/login'
+           , postLoginPath: '/login'
+           , loginView: 'login.jade'
+           , getRegisterPath: '/register'
+           , postRegisterPath: '/register'
+           , registerView: 'register.jade'
+           , loginSuccessRedirect: '/'
+           , registerSuccessRedirect: '/'
+	   }
+        }
 });
 
 mongoose.model('user',userSchema);
@@ -75,7 +88,7 @@ function addUser (source, sourceUser) {
   return user;
 }
 
-everyauth.password
+/*everyauth.password
     .getLoginPath('/login')
     .postLoginPath('/login')
     .loginView('login.jade')
@@ -103,7 +116,7 @@ everyauth.password
 	return usersByLogin[login] = addUser(newUserAttrs);
 	})
     .registerSuccessRedirect('/');
-
+*/
 
 http.get('*',function(req,res){
    console.log("redirecting to https"); 
