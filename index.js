@@ -1,5 +1,6 @@
-var config=require('./config').Config();
-//umm
+var keys=require(process.env.HOME+'/nodetools/keys').Keys;
+var secure=require('./config').Secure;
+var setup=require('./config').Setup;
 var express=require("express");
 var sio=require('socket.io');
 
@@ -7,7 +8,7 @@ var myusers=[];
 
 var MemStore = express.session.MemoryStore;
 var sessionStore=new MemStore;
-var app=express.createServer({key:config.mykey,cert:config.mycert});
+var app=express.createServer({key:keys.sslkey,cert:keys.sslcert});
 var util=require('util');
 var http=express.createServer();
 
@@ -37,16 +38,16 @@ userSchema.plugin(mongooseAuth,{
     twitter:{
 	everyauth: {
             myHostname: 'http://localhost:81'
-	    , consumerKey: config.twitterKey
-            , consumerSecret: config.twitterSecret
+	    , consumerKey: keys.twitterKey
+            , consumerSecret: keys.twitterSecret
             , redirectPath: '/'
         }
     },
     google:{
 	everyauth:{
 	    myHostname: 'http://localhost:81'
-            , appId: config.googleId
-            , appSecret: config.googleSecret
+            , appId: keys.googleId
+            , appSecret: keys.googleSecret
             , redirectPath: '/'
             , scope: 'https://www.googleapis.com/auth/userinfo.email'
 	    }
@@ -122,7 +123,7 @@ http.get('*',function(req,res){
    console.log("redirecting to https"); 
    res.redirect(config.httpsserver+req.url);
 });
-http.listen(config.httpport);
+http.listen(setup.port);
 
 app.configure(function()
 {
@@ -195,5 +196,5 @@ io.sockets.on('connection',function(socket){
 
 everyauth.helpExpress(app);
 
-app.listen(config.httpsport);
+app.listen(secure.httpsport);
 
