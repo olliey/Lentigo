@@ -1,6 +1,9 @@
 var keys=require(process.env.HOME+'/nodetools/keys').Keys;
-var secure=require('./config').Secure;
-var setup=require('./config').Setup;
+
+var infoByN=require(process.env.HOME+'/nodetools/config').infoByName;
+var info=infoByN("lentigo");
+
+
 var express=require("express");
 var sio=require('socket.io');
 
@@ -121,9 +124,9 @@ function addUser (source, sourceUser) {
 
 http.get('*',function(req,res){
    console.log("redirecting to https"); 
-   res.redirect(config.httpsserver+req.url);
+   res.redirect('https://'+info.host+req.url);
 });
-http.listen(setup.port);
+http.listen(info.port);
 
 app.configure(function()
 {
@@ -154,7 +157,7 @@ app.dynamicHelpers({
 });
 app.dynamicHelpers({
     server:function(req,res){
-    return config.server;
+    return info.host;
     }
 });
 
@@ -196,5 +199,5 @@ io.sockets.on('connection',function(socket){
 
 everyauth.helpExpress(app);
 
-app.listen(secure.httpsport);
+app.listen(info.secure);
 
