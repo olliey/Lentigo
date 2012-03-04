@@ -1,7 +1,7 @@
 var keys=require(process.env.HOME+'/nodetools/keys').Keys;
 
 var infoByN=require(process.env.HOME+'/nodetools/config').infoByName;
-var info=infoByN("lentigo");
+var info=infoByN("lentigo.info");
 
 
 var express=require("express");
