@@ -1,4 +1,4 @@
-var keys=require(process.env.HOME+'/nodetools/skeys').Keys;
+var keys=require(process.env.HOME+'/nodetools/keys').Keys;
 
 var infoByN=require(process.env.HOME+'/nodetools/config').infoByName;
 var info=infoByN("lentigo.info");
