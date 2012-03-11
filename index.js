@@ -71,7 +71,7 @@ mongoose.model('user',userSchema);
 
 User=mongoose.model('user');
 
-var usersByLogin={};
+/*var usersByLogin={};
 var usersByTwitter={};
 var usersById = {};
 var nextUserId = 0;
@@ -90,7 +90,7 @@ function addUser (source, sourceUser) {
   return user;
 }
 
-/*everyauth.password
+everyauth.password
     .getLoginPath('/login')
     .postLoginPath('/login')
     .loginView('login.jade')
@@ -122,7 +122,7 @@ function addUser (source, sourceUser) {
 
 http.get('*',function(req,res){
    console.log("redirecting to https"); 
-   res.redirect('https://'+info.host+':'+info.secure+req.url);
+   res.redirect('https://'+info.host+req.url);
 });
 http.listen(info.port);
 
@@ -133,7 +133,7 @@ app.configure(function()
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
-app.use(express.session({secret:'keyboard cat',
+app.use(express.session({secret:'prognosticon',
   store:sessionStore,
   key:'express.sid'}));
 app.use(express.static(__dirname+"/static"));
