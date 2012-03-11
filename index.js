@@ -3,7 +3,6 @@ var keys=require(process.env.HOME+'/nodetools/keys').Keys;
 var infoByN=require(process.env.HOME+'/nodetools/config').infoByName;
 var info=infoByN("lentigo.info");
 
-
 var express=require("express");
 var sio=require('socket.io');
 
@@ -12,7 +11,7 @@ var myusers=[];
 var MemStore = express.session.MemoryStore;
 var sessionStore=new MemStore;
 var app=express.createServer({key:keys.sslkey,cert:keys.sslcert});
-var util=require('util');
+
 var http=express.createServer();
 
 var everyauth=require('everyauth');
@@ -27,7 +26,6 @@ mongoose.connect('mongodb://localhost/mydatabase');
 
 var Schema = mongoose.Schema;
 var userSchema = new Schema({});
-
 var User;
 
 userSchema.plugin(mongooseAuth,{
@@ -124,7 +122,7 @@ function addUser (source, sourceUser) {
 
 http.get('*',function(req,res){
    console.log("redirecting to https"); 
-   res.redirect('https://'+info.host+req.url);
+   res.redirect('https://'+info.host+':'+info.secure+req.url);
 });
 http.listen(info.port);
 
@@ -144,6 +142,7 @@ app.use(express.errorHandler());
 });
 
 app.set('view engine','jade');
+app.set('views',__dirname+'/views');
 
 app.dynamicHelpers({
   session:function(req,res){
