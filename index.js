@@ -38,7 +38,7 @@ userSchema.plugin(mongooseAuth,{
     },
     twitter:{
 	everyauth: {
-            myHostname: 'http://localhost:81'
+            myHostname: 'http://'+info.host
 	    , consumerKey: keys.twitterKey
             , consumerSecret: keys.twitterSecret
             , redirectPath: '/'
@@ -46,7 +46,7 @@ userSchema.plugin(mongooseAuth,{
     },
     google:{
 	everyauth:{
-	    myHostname: 'http://localhost:81'
+	    myHostname: 'https://'+info.host+':'+info.secure
             , appId: keys.googleId
             , appSecret: keys.googleSecret
             , redirectPath: '/'
@@ -161,6 +161,7 @@ app.dynamicHelpers({
 });
 
 app.get('/',function(req,res){
+console.log(req,req.url);
 res.render("initial");
 });
 
